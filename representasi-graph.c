@@ -41,10 +41,70 @@ void cekKeterhubungan(int a[MAX][MAX], int n) {
     }
     
     if (isConnected)
-        printf("Graph ini terhubung.\n");
+        printf("Graph ini adalah graph terhubung.\n");
     else
-        printf("Graph ini tidak terhubung.\n");
+        printf("Graph ini adalah graph tidak terhubung.\n");
 }
+
+// Fungsi untuk mengecek apakah graph berarah atau tidak
+int cekGraphBerarah(int a[MAX][MAX], int n) {
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (a[i][j] != a[j][i]) {
+                return 1; // Graph berarah
+            }
+        }
+    }
+    return 0; // Graph tidak berarah
+}
+
+// Fungsi untuk menghitung derajat suatu vertex
+void hitungDerajatVertex(int a[MAX][MAX], int n) {
+    int ver;
+    printf("\nDerajat Setiap Vertex: ");
+    scanf("%d", &ver);
+
+    if (ver < 1 || ver > n) {
+        printf("Vertex tidak valid!\n");
+        return;
+    }
+
+    int derajat = 0;
+    for(int i = 1; i <= n; i++){
+        if (i == ver){
+           for(int j = 1; j <= n; j++){
+            derajat += a[ver][j];
+            }
+        }
+    }
+    printf("Derajat Vertex %d: %d\n", ver, derajat); //hasil derajat
+}
+
+// Fungsi untuk menghitung total derajat semua vertex
+void hitungTotalDerajat(int a[MAX][MAX], int n) {
+    int totalDerajat = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            totalDerajat += a[i][j];
+        }
+    }
+    printf("Derajat Semua Vertex: %d\n", totalDerajat);
+}
+
+// Fungsi untuk mengecek apakah ada loop dalam graph
+void cekLoop(int a[MAX][MAX], int n) {
+    int adaLoop = 0;
+    for (int i = 1; i <= n; i++) {
+        if (a[i][i] == 1) {
+            adaLoop = 1;
+            printf("Terdapat loop pada vertex %d.\n", i);
+        }
+    }
+    if (!adaLoop) {
+        printf("Graph ini tidak memiliki loop.\n");
+    }
+}
+
 
 int main() {
     int a[MAX][MAX] = {0}; // Inisialisasi matriks adjacency dengan 0
@@ -70,9 +130,25 @@ int main() {
         }
         printf("\n");
     }
-    
+    printf("\n");
+
     // Cek keterhubungan graph
     cekKeterhubungan(a, n);
+
+    // Cek apakah graph berarah atau tidak
+    if (cekGraphBerarah(a, n))
+        printf("Graph ini adalah graph berarah.\n");
+    else
+        printf("Graph ini adalah graph tidak berarah.\n");
+
+    // Hitung derajat vertex tertentu
+    hitungDerajatVertex(a, n);
+
+    // Hitung total derajat semua vertex
+    hitungTotalDerajat(a, n);
+
+    // Cek apakah ada loop dalam graph
+    cekLoop(a, n);
     
     return 0;
 }
