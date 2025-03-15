@@ -60,25 +60,19 @@ int cekGraphBerarah(int a[MAX][MAX], int n) {
 
 // Fungsi untuk menghitung derajat suatu vertex
 void hitungDerajatVertex(int a[MAX][MAX], int n) {
-    int ver;
-    printf("\nDerajat Setiap Vertex: ");
-    scanf("%d", &ver);
+    int ver = n;
+    printf("\nDerajat Setiap Vertex:\n");
 
-    if (ver < 1 || ver > n) {
-        printf("Vertex tidak valid!\n");
-        return;
-    }
-
-    int derajat = 0;
+    int derajat[ver];
     for(int i = 1; i <= n; i++){
-        if (i == ver){
+        derajat[i] = 0;
            for(int j = 1; j <= n; j++){
-            derajat += a[ver][j];
+            derajat[i] += a[i][j];
             }
-        }
+        printf("\nDerajat Vertex %d: %d", i, derajat[i]); //hasil derajat
     }
-    printf("Derajat Vertex %d: %d\n", ver, derajat); //hasil derajat
 }
+
 
 // Fungsi untuk menghitung total derajat semua vertex
 void hitungTotalDerajat(int a[MAX][MAX], int n) {
@@ -90,6 +84,7 @@ void hitungTotalDerajat(int a[MAX][MAX], int n) {
     }
     printf("Derajat Semua Vertex: %d\n", totalDerajat);
 }
+
 
 // Fungsi untuk mengecek apakah ada loop dalam graph
 void cekLoop(int a[MAX][MAX], int n) {
@@ -141,14 +136,15 @@ int main() {
     else
         printf("Graph ini adalah graph tidak berarah.\n");
 
+    // Cek apakah ada loop dalam graph
+    cekLoop(a, n);
+
     // Hitung derajat vertex tertentu
     hitungDerajatVertex(a, n);
+    printf("\n");
 
     // Hitung total derajat semua vertex
     hitungTotalDerajat(a, n);
 
-    // Cek apakah ada loop dalam graph
-    cekLoop(a, n);
-    
     return 0;
 }
